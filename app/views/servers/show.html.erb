@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Instance:</strong>
+  <%= @server.instance_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @server.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @server.description %>
+</p>
+
+<p>
+  <strong>Shutdown:</strong>
+  <%= @server.shutdown %>
+</p>
+
+<%= link_to 'Edit', edit_server_path(@server) %> |
+<%= link_to 'Back', servers_path %>

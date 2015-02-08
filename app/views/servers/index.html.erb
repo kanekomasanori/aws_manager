@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Servers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Instance</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Shutdown</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @instances.each do |instane_id,instance_value| %>
+      <tr>
+        <td><%= instane_id %></td>
+        <td><%= instance_value[:tag_set].find{ |tag| [:key] == 'Name'}[:value] %></td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Server', new_server_path %>
