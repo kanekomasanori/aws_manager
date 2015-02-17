@@ -1,24 +1,25 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Server -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <strong>Instance:</strong>
-  <%= @server.instance_id %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:instance_id) %>:</strong></dt>
+  <dd><%= @server.instance_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @server.description %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:shutdown) %>:</strong></dt>
+  <dd><%= @server.shutdown %></dd>
+</dl>
 
-<p>
-  <strong>Name:</strong>
-  <%= @server.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @server.description %>
-</p>
-
-<p>
-  <strong>Shutdown:</strong>
-  <%= @server.shutdown %>
-</p>
-
-<%= link_to 'Edit', edit_server_path(@server) %> |
-<%= link_to 'Back', servers_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              servers_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_server_path(@server), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              server_path(@server),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>

@@ -1,8 +1,8 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Servers</h1>
-
-<table>
+<%- model_class = Server -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Instance</th>
@@ -10,9 +10,9 @@
       <th>InstanceType</th>
       <th>Description</th>
       <th>Shutdown</th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @instances.each do |instance_id,instance_value| %>
       <tr>
@@ -25,14 +25,12 @@
             [有効]
           <% else %>
             [無効]
-          <% end %>|
-          <%= button_to '設定', { action: :shutdown, instance_id: instance_id }, method: :post, remote: true %>
+          <% end %>
+        </td>
+        <td>
+          <%= button_to '設定', { action: :shutdown, instance_id: instance_id, method: :post, remote: true }, class: 'btn btn-mini' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Server', new_server_path %>
