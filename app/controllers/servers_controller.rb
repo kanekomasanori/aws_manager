@@ -6,7 +6,14 @@ class ServersController < ApplicationController
   # GET /servers
   # GET /servers.json
   def index
-    @servers = Server.all
+    ec2 = AWS::EC2::Client.new(region: 'ap-northeast-1')
+    @instances = ec2.describe_instances[:instance_index]
+    @servers = {}
+    Server.where(instance_id: @instances.keys).each do |server|
+      @servers[server.instance_id] = server
+    end
+  rescue => e
+    render text: e.message
   end
 
   # GET /servers/1
@@ -61,6 +68,12 @@ class ServersController < ApplicationController
       format.html { redirect_to servers_url, notice: 'Server was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def shutdown
+    @server = Server.find_or_create_by(instance_id: params[:instance_id])
+    @server.update_attributes instance_id: params[:instance_id], shutdown: !@server.shutdown
+    render "shutdown", :formats => [:json], :handlers => [:jbuilder]
   end
 
   private
