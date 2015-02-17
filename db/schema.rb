@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202133728) do
+ActiveRecord::Schema.define(version: 20150217000346) do
 
   create_table "servers", force: :cascade do |t|
     t.string   "instance_id", limit: 255
-    t.string   "name",        limit: 255
     t.string   "description", limit: 255
     t.boolean  "shutdown",    limit: 1
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
+
+  add_index "servers", ["instance_id"], name: "index_servers_on_instance_id", unique: true, using: :btree
 
 end
