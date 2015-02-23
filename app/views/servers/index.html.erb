@@ -5,11 +5,12 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Instance</th>
-      <th>Name</th>
-      <th>InstanceType</th>
-      <th>Description</th>
-      <th>Shutdown</th>
+      <th>インスタンスID</th>
+      <th>名称</th>
+      <th>タイプ</th>
+      <th>状態</th>
+      <th>説明</th>
+      <th>電源OFF</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -19,16 +20,18 @@
         <td><%= instance_id %></td>
         <td><%= instance_value[:tag_set].find{ |tag| tag[:key] == 'Name'}[:value] %></td>
         <td><%= instance_value[:instance_type] %></td>
-        <td></td>
+        <td><%= instance_value[:instance_state][:name] %></td>
+        <td><%= @servers[instance_id].try(:description) %></td>
         <td>
-          <% if @servers[instance_id].shutdown %>
-            [有効]
+          <% if @servers[instance_id].try(:shutdown) %>
+            Start:<%= @servers[instance_id][:start_time] %><br />
+            Stop:<%= @servers[instance_id][:stop_time] %>
           <% else %>
-            [無効]
+            -
           <% end %>
         </td>
         <td>
-          <%= button_to '設定', { action: :shutdown, instance_id: instance_id, method: :post, remote: true }, class: 'btn btn-mini' %>
+          <%= link_to '<span class="icon-cog"></span>'.html_safe, action: :setting, instance_id: instance_id %>
         </td>
       </tr>
     <% end %>

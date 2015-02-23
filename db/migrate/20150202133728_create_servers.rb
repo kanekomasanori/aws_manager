@@ -4,7 +4,7 @@ class CreateServers < ActiveRecord::Migration
       t.string :instance_id
       t.string :name
       t.string :description
-      t.boolean :shutdown
+      t.boolean :shutdown, default: false
 
       t.timestamps null: false
     end
