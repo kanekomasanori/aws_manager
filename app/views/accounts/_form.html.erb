@@ -1,26 +1,26 @@
 <%= form_for @account, :html => { :class => 'form-horizontal' } do |f| %>
   <div class="control-group">
-    <%= f.label :login_id, :class => 'control-label' %>
+    <%= f.label :user_arn, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :login_id, :class => 'text_field' %>
+      <%= f.text_field :user_arn, size: 50, class: 'text_field' %>
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :name, :class => 'control-label' %>
+    <%= f.label :user_name, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :name, :class => 'text_field' %>
+      <%= f.text_field :user_name, size: 50, class: 'text_field' %>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :access_key_id, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :access_key_id, :class => 'text_field' %>
+      <%= f.text_field :access_key_id, size: 100, class: 'text_field' %>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :secret_access_key, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :secret_access_key, :class => 'text_field' %>
+      <%= f.text_field :secret_access_key, size: 100, class: 'text_field' %>
     </div>
   </div>
 
