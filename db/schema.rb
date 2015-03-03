@@ -14,10 +14,10 @@
 ActiveRecord::Schema.define(version: 20150303003741) do
 
   create_table "account_regions", force: :cascade do |t|
-    t.integer  "account_id",  limit: 4
-    t.integer  "region_code", limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "account_id", limit: 4
+    t.string   "region",     limit: 255, default: "ap-northeast-1", null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
   end
 
   create_table "accounts", force: :cascade do |t|
