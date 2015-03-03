@@ -6,6 +6,8 @@ class ServersController < ApplicationController
   # GET /servers
   # GET /servers.json
   def index
+    account = Account.find(params[:account_id])
+    AWS.config access_key_id: account.access_key_id, secret_access_key: account.secret_access_key
     ec2 = AWS::EC2::Client.new(region: 'ap-northeast-1')
     @instances = ec2.describe_instances[:instance_index]
     @servers = {}
