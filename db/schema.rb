@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150220185337) do
+ActiveRecord::Schema.define(version: 20150303003741) do
+
+  create_table "account_regions", force: :cascade do |t|
+    t.integer  "account_id",  limit: 4
+    t.integer  "region_code", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
 
   create_table "accounts", force: :cascade do |t|
     t.string   "user_arn",          limit: 255, null: false
@@ -23,15 +30,13 @@ ActiveRecord::Schema.define(version: 20150220185337) do
   end
 
   create_table "servers", force: :cascade do |t|
+    t.integer  "account_id",  limit: 4
     t.string   "instance_id", limit: 255
+    t.string   "name",        limit: 255
     t.string   "description", limit: 255
     t.boolean  "shutdown",    limit: 1,   default: false
-    t.string   "start_time",  limit: 5,   default: "10:00"
-    t.string   "stop_time",   limit: 5,   default: "24:00"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
-
-  add_index "servers", ["instance_id"], name: "index_servers_on_instance_id", unique: true, using: :btree
 
 end
