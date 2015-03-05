@@ -196,3 +196,7 @@ ja:
     models:
       server:
         instance_id: インスタンスID
+  enumerize:
+    account_region:
+      region:
+        ap-northeast-1: "東京（ap-northeast-1）"

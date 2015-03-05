@@ -20,6 +20,14 @@
     </div>
   </div>
 
+  <%= f.simple_fields_for :account_regions do |rf| %>
+  <div class="control-group">
+    <div class="controls">
+      <%= rf.input :region %>
+    </div>
+  </div>
+  <% end %>
+
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

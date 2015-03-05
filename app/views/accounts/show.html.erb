@@ -1,17 +1,22 @@
 <%- model_class = Account -%>
+<%- region_model_class = AccountRegion -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:login_id) %>:</strong></dt>
-  <dd><%= @account.login_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @account.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:user_arn) %>:</strong></dt>
+  <dd><%= @account.user_arn %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:user_name) %>:</strong></dt>
+  <dd><%= @account.user_name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:access_key_id) %>:</strong></dt>
   <dd><%= @account.access_key_id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:secret_access_key) %>:</strong></dt>
   <dd><%= @account.secret_access_key %></dd>
+  <dt><strong><%= region_model_class.human_attribute_name(:region) %>:</strong></dt>
+  <% @account.account_regions.each do |account_region| %>
+    <dd><%= account_region.region_text %></dd>
+  <% end %>
 </dl>
 
 <div class="form-actions">
