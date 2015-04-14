@@ -51,3 +51,4 @@ gem 'enumerize'
 gem 'simple_form'
 
 gem 'lograge'
+gem 'logstash-event'

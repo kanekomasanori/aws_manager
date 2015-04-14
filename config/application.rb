@@ -21,6 +21,11 @@ module AwsManager
     config.i18n.default_locale = :ja
 
     config.lograge.enabled = true
+    config.lograge.formatter = Lograge::Formatters::Logstash.new
+    config.lograge.custom_options = lambda do |event|
+      # capture some specific timing values you are interested in
+      {:host => event.payload[:host]}
+    end
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
