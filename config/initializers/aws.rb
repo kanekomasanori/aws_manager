@@ -1,3 +1,3 @@
-require 'aws'
+require 'aws-sdk'
 
-AWS.config logger: Rails.logger
+Aws.config.update logger: Rails.logger

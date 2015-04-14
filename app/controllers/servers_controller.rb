@@ -7,11 +7,18 @@ class ServersController < ApplicationController
   # GET /servers.json
   def index
     account = Account.find(params[:account_id])
-    AWS.config access_key_id: account.access_key_id, secret_access_key: account.secret_access_key
-    ec2 = AWS::EC2::Client.new(region: 'ap-northeast-1')
-    @instances = ec2.describe_instances[:instance_index]
+    Aws.config.update({
+      region: 'ap-northeast-1',
+      credentials: Aws::Credentials.new('AKIAIH3AYX6AQLELPYKA', 'lbGzQYvW+6miBWtKBUSxPmZ7oIDBON5axVdWX5tt'),
+    })
+
+    ec2 = Aws::EC2::Client.new
+    @instances = []
+    @instances << ec2.describe_instances.reservations.map(&:instances)
+    @instances.flatten!
+
     @servers = {}
-    Server.where(instance_id: @instances.keys).each do |server|
+    Server.where(instance_id: @instances.map(&:instance_id)).each do |server|
       @servers[server.instance_id] = server
     end
   rescue => e
