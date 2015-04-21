@@ -1,25 +1,17 @@
-require 'aws-sdk'
-
 class ServersController < ApplicationController
-  before_action :set_server, only: [:update]
+  include EC2Usable
+  before_action :set_account, only: [:index, :setting]
+  before_action :set_server, only: [:setting]
 
   # GET /servers
   # GET /servers.json
   def index
     account = Account.find(params[:account_id])
-    Aws.config.update({
-      region: 'ap-northeast-1',
-      credentials: Aws::Credentials.new('AKIAIH3AYX6AQLELPYKA', 'lbGzQYvW+6miBWtKBUSxPmZ7oIDBON5axVdWX5tt'),
-    })
-
-    ec2 = Aws::EC2::Client.new
-    @instances = []
-    @instances << ec2.describe_instances.reservations.map(&:instances)
-    @instances.flatten!
+    @instances = obtain_instances(account.id, account.account_regions.first.region)
 
     @servers = {}
-    Server.where(instance_id: @instances.map(&:instance_id)).each do |server|
-      @servers[server.instance_id] = server
+    @instances.each do |instance|
+      @servers[instance.instance_id] = Server.find_by(instance_id: instance.instance_id) || @account.servers.create(instance_id: instance.instance_id)
     end
   rescue => e
     render text: e.message
@@ -27,12 +19,10 @@ class ServersController < ApplicationController
 
   # GET /servers/1/edit
   def edit
-    @server = Server.find_or_create_by(instance_id: params[:instance_id])
   end
 
   # GET /servers/:instance_id/setting
   def setting
-    @server = Server.find_or_create_by(instance_id: params[:instance_id])
     render :edit
   end
 
@@ -51,12 +41,14 @@ class ServersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_server
-      @server = Server.find(params[:id])
+    def set_account
+      @account = Account.find(params[:account_id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    def set_server
+      @server = @account.servers.find_or_create_by(instance_id: params[:instance_id])
+    end
+
     def server_params
       params.require(:server).permit(:start_time, :end_time, :description, :shutdown)
     end

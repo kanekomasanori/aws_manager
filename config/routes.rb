@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :accounts do
     resources :servers, only: [:index, :new, :edit, :update] do
-      get ':instance_id/setting', to: :setting, on: :collection
+      get 'setting', to: :setting
     end
   end
 

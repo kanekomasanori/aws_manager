@@ -31,7 +31,7 @@
           <% end %>
         </td>
         <td>
-          <%= link_to '<span class="icon-cog"></span>'.html_safe, action: :setting, instance_id: instance.instance_id %>
+          <%= link_to '<span class="icon-cog"></span>'.html_safe,  url_for([@account, @servers[instance.instance_id], :setting]) %>
         </td>
       </tr>
     <% end %>
